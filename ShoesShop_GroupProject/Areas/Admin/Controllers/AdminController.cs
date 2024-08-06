@@ -44,17 +44,20 @@ namespace ShoesShop_GroupProject.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product, IFormFile ImageFile)
+        public async Task<IActionResult> Create(Product product, IFormFile ImagePath)
         {
             if (ModelState.IsValid)
             {
-                if (ImageFile != null && ImageFile.Length > 0)
+                if (ImagePath != null)
                 {
-                    using (var memoryStream = new MemoryStream())
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(ImagePath.FileName);
+                    string extension = Path.GetExtension(ImagePath.FileName);
+                    product.ImagePath = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/images/", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
                     {
-                        await ImageFile.CopyToAsync(memoryStream);
-                        product.ImageData = memoryStream.ToArray();
-                        product.ImageMimeType = ImageFile.ContentType;
+                        await ImagePath.CopyToAsync(fileStream);
                     }
                 }
 
@@ -63,11 +66,27 @@ namespace ShoesShop_GroupProject.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
+
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = _context.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Product product, IFormFile ImageFile)
+        public async Task<IActionResult> Edit(int id, Product product, IFormFile imageFile)
         {
             if (id != product.Id)
             {
@@ -78,22 +97,17 @@ namespace ShoesShop_GroupProject.Areas.Admin.Controllers
             {
                 try
                 {
-                    if (ImageFile != null && ImageFile.Length > 0)
+                    if (imageFile != null)
                     {
-                        using (var memoryStream = new MemoryStream())
+                        string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
-                            await ImageFile.CopyToAsync(memoryStream);
-                            product.ImageData = memoryStream.ToArray();
-                            product.ImageMimeType = ImageFile.ContentType;
+                            await imageFile.CopyToAsync(fileStream);
                         }
+                        product.ImagePath = "/images/" + uniqueFileName;
                     }
-                    else
-                    {
-                        var existingProduct = _context.Products.AsNoTracking().FirstOrDefault(p => p.Id == id);
-                        product.ImageData = existingProduct.ImageData;
-                        product.ImageMimeType = existingProduct.ImageMimeType;
-                    }
-
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
