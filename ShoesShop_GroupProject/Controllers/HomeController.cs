@@ -1,32 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShoesShop_GroupProject.Data;
 using ShoesShop_GroupProject.Models;
 using System.Diagnostics;
 
 namespace ShoesShop_GroupProject.Controllers
 {
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+	public class HomeController : Controller
+	{
+		private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+		public HomeController(ApplicationDbContext context)
+		{
+			_context = context;
+		}
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+		public IActionResult Index()
+		{
+			// Fetch all products from the database
+			var products = _context.Products.ToList();
+			ViewBag.products = products;
+			return View();
+		}
+	}
 }
