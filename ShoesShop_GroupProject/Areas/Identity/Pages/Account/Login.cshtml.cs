@@ -53,6 +53,9 @@ namespace ShoesShop_GroupProject.Areas.Identity.Pages.Account
         /// </summary>
         [TempData]
         public string ErrorMessage { get; set; }
+        public IdentityUser Email { get; internal set; }
+        public string Password { get; internal set; }
+        public bool RememberMe { get; internal set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

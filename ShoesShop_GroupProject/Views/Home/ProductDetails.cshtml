@@ -1,0 +1,99 @@
+﻿@model ShoesShop_GroupProject.Models.Product
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="product-entry border">
+                <a href="#" class="prod-img">
+                    <img src="@Url.Content(Model.ImagePath)" alt="Product Image" class="img-fluid">
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="product-desc">
+                <h3>@Model.Name</h3>
+                <p class="price">
+                    <span>$@Model.Price</span>
+                </p>
+                <p>@Model.Description</p>
+                <div class="size-wrap mb-4">
+                    <h4>Size</h4>
+                    <ul id="size-options" class="list-inline">
+                        <li class="list-inline-item"><a href="#" data-size="7">7</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="7.5">7.5</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="8">8</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="8.5">8.5</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="9">9</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="9.5">9.5</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="10">10</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="10.5">10.5</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="11">11</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="11.5">11.5</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="12">12</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="12.5">12.5</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="13">13</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="13.5">13.5</a></li>
+                        <li class="list-inline-item"><a href="#" data-size="14">14</a></li>
+                    </ul>
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-btn">
+                        <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
+                            <i class="icon-minus2"></i>
+                        </button>
+                    </span>
+                    <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                    <span class="input-group-btn ml-1">
+                        <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                            <i class="icon-plus2"></i>
+                        </button>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p class="addtocart">
+                            <a href="#" id="add-to-cart" class="btn btn-primary btn-addtocart">
+                                <i class="icon-shopping-cart"></i> Add to Cart
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let selectedSize = null;
+
+        // Handle size selection
+        $('#size-options a').click(function (e) {
+            e.preventDefault();
+            selectedSize = $(this).data('size');
+            $('#size-options a').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+        // Handle Add to Cart click
+        $('#add-to-cart').click(function (e) {
+            e.preventDefault();
+
+            if (selectedSize === null) {
+                alert("Please select a size.");
+                return;
+            }
+
+            const productId = "@Model.Id";
+            const quantity = $('#quantity').val();
+
+            $.post('@Url.Action("AddToCart", "Cart")', { productId: productId, size: selectedSize, quantity: quantity }, function (result) {
+                if (result.redirectToLogin) {
+                    window.location.href = '@Url.Action("Login", "Account", new { area = "Identity" })';
+                } else {
+                    window.location.href = '@Url.Action("Index", "Cart")';
+                }
+            });
+        });
+    </script>
+}
