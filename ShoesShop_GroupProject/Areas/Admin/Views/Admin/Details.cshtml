@@ -4,33 +4,62 @@
     ViewData["Title"] = "Product Details";
 }
 
-<div class="container mt-5">
-    <h1 class="mb-4">Product Details</h1>
+<h1>@Model.Name</h1>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <h4>@Model.Name</h4>
-        </div>
-        <div class="card-body">
-            <p><strong>Description:</strong> @Model.Description</p>
-            <p><strong>Price:</strong> @Model.Price.ToString("C")</p>
-            <p><strong>Stock:</strong> @Model.Stock</p>
-            <p><strong>Category:</strong> @Model.Category</p>
-            <p><strong>Brand:</strong> @Model.Brand</p>
-            
-        </div>
-        <div class="card-footer text-center">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-warning">Edit</a>
-            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger">Delete</a>
-        </div>
+<div class="row">
+    <div class="col-md-4">
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img src="@Model.ImagePath" alt="@Model.Name" class="img-fluid rounded" />
+        }
     </div>
+    <div class="col-md-8">
+        <dl class="row">
+            <dt class="col-sm-3">
+                Name
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-    <div class="text-center">
-        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+            <dt class="col-sm-3">
+                Description
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt class="col-sm-3">
+                Price
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt class="col-sm-3">
+                Stock
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Stock)
+            </dd>
+
+            <dt class="col-sm-3">
+                Brand
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Brand)
+            </dd>
+
+            <dt class="col-sm-3">
+                Category
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Category)
+            </dd>
+        </dl>
+        <div class="form-group">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
     </div>
 </div>
-
-@section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-}

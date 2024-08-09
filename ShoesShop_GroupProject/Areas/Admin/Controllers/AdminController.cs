@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using ShoesShop_GroupProject.Data;
 using ShoesShop_GroupProject.Models;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,16 +16,14 @@ namespace ShoesShop_GroupProject.Areas.Admin.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
         private const string OriginalAdminEmail = "admin@example.com";
 
-        public AdminController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IWebHostEnvironment webHostEnvironment)
+        public AdminController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -44,29 +39,15 @@ namespace ShoesShop_GroupProject.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product, IFormFile ImagePath)
+        public async Task<IActionResult> Create(Product product)
         {
             if (ModelState.IsValid)
             {
-                if (ImagePath != null)
-                {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    string fileName = Path.GetFileNameWithoutExtension(ImagePath.FileName);
-                    string extension = Path.GetExtension(ImagePath.FileName);
-                    product.ImagePath = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                    string path = Path.Combine(wwwRootPath + "/images/", fileName);
-                    using (var fileStream = new FileStream(path, FileMode.Create))
-                    {
-                        await ImagePath.CopyToAsync(fileStream);
-                    }
-                }
-
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
-
         }
 
         public IActionResult Edit(int? id)
@@ -86,7 +67,7 @@ namespace ShoesShop_GroupProject.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Product product, IFormFile imageFile)
+        public async Task<IActionResult> Edit(int id, Product product)
         {
             if (id != product.Id)
             {
@@ -97,17 +78,6 @@ namespace ShoesShop_GroupProject.Areas.Admin.Controllers
             {
                 try
                 {
-                    if (imageFile != null)
-                    {
-                        string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await imageFile.CopyToAsync(fileStream);
-                        }
-                        product.ImagePath = "/images/" + uniqueFileName;
-                    }
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
@@ -231,6 +201,23 @@ namespace ShoesShop_GroupProject.Areas.Admin.Controllers
 
             TempData["Error"] = "An error occurred while deleting the user.";
             return RedirectToAction(nameof(UserManagement));
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = _context.Products
+                .FirstOrDefault(m => m.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
     }
 }
