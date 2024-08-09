@@ -8,33 +8,121 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ShoesShop_GroupProject.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="~/css/TemplateCss/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="~/css/TemplateCss/icomoon.css">
+    <!-- Ion Icon Fonts-->
+    <link rel="stylesheet" href="~/css/TemplateCss/ionicons.min.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="~/css/TemplateCss/bootstrap.min.css">
+
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="~/css/TemplateCss/magnific-popup.css">
+
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="~/css/TemplateCss/flexslider.css">
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="~/css/TemplateCss/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/TemplateCss/owl.theme.default.min.css">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="~/css/TemplateCss/bootstrap-datepicker.css">
+    <!-- Flaticons  -->
+    <link rel="stylesheet" href="~/fonts/flaticon/font/flaticon.css">
+
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="~/css/TemplateCss/style.css">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ShoesShop_GroupProject</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <partial name="_LoginPartial" />
-                    </ul>
+        <nav class="colorlib-nav" role="navigation">
+            <div class="top-menu">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-sm-7 col-md-6">
+                            <div id="colorlib-logo"><a href="~/Home/Index">Footwear</a></div>
+                        </div>
+                        <div class="col-sm-5 col-md-6">
+                            <form action="#" class="search-wrap">
+                                <div class="form-group">
+                                    <input type="search" class="form-control search" placeholder="Search">
+                                    <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 menu-1 d-flex justify-content-between align-items-center">
+                            <ul class="navbar-nav flex-grow-1 d-flex justify-content-start">
+                                <li class="nav-item active"><a class="nav-link text-dark" href="~/Home/Index">Home</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-action="MansShoes" asp-controller="Home">Men</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-action="WomensShoes" asp-controller="Home">Women</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="~/Home/About">About</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="~/Home/Contact">Contact Us</a></li>
+                                <li class="nav-item cart"><a class="nav-link text-dark" href="~/Home/Cart"><i class="icon-shopping-cart"></i> Cart </a></li>
+                            </ul>
+                            <ul class="navbar-nav d-flex justify-content-end">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item">
+                                        <span class="nav-link text-dark">
+                                            Hello @User.Identity.Name
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <span>Admin</span>
+                                            }
+                                        </span>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li class="nav-item"><a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin Panel</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li class="nav-item"><a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a></li>
+                                    <li class="nav-item"><a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            @if (!User.IsInRole("Admin"))
+            {
+                <div class="sale">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8 offset-sm-2 text-center">
+                                <div class="row">
+                                    <div class="owl-carousel2">
+                                        <div class="item">
+                                            <div class="col">
+                                                <h3><a href="#">25% off (Almost) Everything! Use Code: Summer Sale</a></h3>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="col">
+                                                <h3><a href="#">Our biggest sale yet 50% off all summer shoes</a></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -46,6 +134,7 @@
             &copy; 2024 - ShoesShop_GroupProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

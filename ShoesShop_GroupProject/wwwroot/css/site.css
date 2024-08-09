@@ -16,3 +16,33 @@ html {
 body {
   margin-bottom: 60px;
 }
+.menu-1 .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 0.9rem; /* Slightly reduce font size */
+}
+
+    .menu-1 .navbar-nav .nav-item {
+        margin-right: 15px; /* Spacing between items */
+    }
+
+.navbar-nav.ml-auto {
+    margin-left: auto;
+}
+
+.menu-1.d-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+#colorlib-logo {
+    font-size: 1.5rem; /* Ensure the logo is prominent */
+    font-weight: bold;
+}
+
+.search-wrap .form-control {
+    width: auto; /* Ensure the search bar fits nicely */
+    margin-left: 10px;
+}
+

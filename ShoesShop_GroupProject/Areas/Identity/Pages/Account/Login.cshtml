@@ -3,46 +3,89 @@
 
 @{
     ViewData["Title"] = "Log in";
-    //  Layout = "_Layout";  Ensure your Layout is set
+    Layout = "_Layout";  //Ensure your Layout is set
 }
 
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
-
-    .card-custom {
-        background: white;
-        border-radius: 1rem;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header-custom {
-        background-color: #007bff;
-        color: white;
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-    }
-
-    .form-floating-custom .form-control {
-        height: auto;
-    }
-
-    .btn-primary-custom {
-        background-color: #007bff;
-        border-color: #007bff;
-        border-radius: 2rem;
-    }
-
-        .btn-primary-custom:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+    <style>
+        body {
+            background-color: #f8f9fa;
         }
 
-    .text-center-custom {
-        text-align: center;
-    }
-</style>
+        .card-custom {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header-custom {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+
+        .form-floating-custom .form-control {
+            height: auto;
+        }
+
+        .btn-primary-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 2rem;
+        }
+
+            .btn-primary-custom:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+            }
+
+        .text-center-custom {
+            text-align: center;
+        }
+    </style>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Footwear</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+@*     <link rel="stylesheet" href="~/ShoesShop_GroupProject.styles.css" asp-append-version="true" />
+ *@    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="~css/TemplateCss/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="~css/TemplateCss/icomoon.css">
+    <!-- Ion Icon Fonts-->
+    <link rel="stylesheet" href="~css/TemplateCss/ionicons.min.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="~css/TemplateCss/bootstrap.min.css">
+
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="~css/TemplateCss/magnific-popup.css">
+
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="~css/TemplateCss/flexslider.css">
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="~css/TemplateCss/owl.carousel.min.css">
+    <link rel="stylesheet" href="~css/TemplateCss/owl.theme.default.min.css">
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="~css/TemplateCss/bootstrap-datepicker.css">
+    <!-- Flaticons  -->
+    <link rel="stylesheet" href="~css/fonts/flaticon/font/flaticon.css">
+
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="~/css/TemplateCss/style.css">
+
+
+</head>
+<header>
+    
+</header>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -83,8 +126,11 @@
             </div>
         </div>
     </div>
+
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+
