@@ -21,6 +21,7 @@
                 <th>@Html.DisplayNameFor(model => model.Stock)</th>
                 <th>@Html.DisplayNameFor(model => model.Brand)</th>
                 <th>@Html.DisplayNameFor(model => model.Category)</th>
+                <th>@Html.DisplayNameFor(model => model.Gender)</th>
                 <th>Image</th>
                 <th class="text-center">Actions</th>
             </tr>
@@ -35,6 +36,7 @@
                     <td>@Html.DisplayFor(modelItem => item.Stock)</td>
                     <td>@Html.DisplayFor(modelItem => item.Brand)</td>
                     <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Gender)</td>
                     <td>
                         @if (!string.IsNullOrEmpty(item.ImagePath))
                         {

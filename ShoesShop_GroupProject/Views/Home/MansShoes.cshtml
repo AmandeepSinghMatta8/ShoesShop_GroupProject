@@ -1,0 +1,31 @@
+﻿@model ShoesShop_GroupProject.Models.ListViewProduct
+
+@{
+    ViewData["Title"] = "Men's Shoes";
+}
+
+<div class="colorlib-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2 text-center colorlib-heading">
+                <h2>Men's Shoes</h2>
+            </div>
+        </div>
+        <div class="row row-pb-md">
+            @foreach (var productItem in Model.Products)
+            {
+                <div class="col-lg-3 mb-4 text-center">
+                    <div class="product-entry border">
+                        <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@productItem.Id" class="prod-img">
+                            <img src="@Url.Content(productItem.ImagePath)" class="img-fluid" alt="Product Image">
+                        </a>
+                        <div class="desc">
+                            <h2><a href="#">@productItem.Name</a></h2>
+                            <span class="price">$@productItem.Price</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

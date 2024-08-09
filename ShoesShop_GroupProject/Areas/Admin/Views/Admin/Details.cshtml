@@ -4,73 +4,72 @@
     ViewData["Title"] = "Product Details";
 }
 
-<div class="container mt-5">
-    <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h2>@Model.Name</h2>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    @if (!string.IsNullOrEmpty(Model.ImagePath))
-                    {
-                        <img src="@Model.ImagePath" alt="@Model.Name" class="img-fluid rounded border" style="max-width: 100%; height: auto;" />
-                    }
-                    else
-                    {
-                        <img src="~/images/no-image-available.png" alt="No Image Available" class="img-fluid rounded border" style="max-width: 100%; height: auto;" />
-                    }
-                </div>
-                <div class="col-md-8">
-                    <dl class="row">
-                        <dt class="col-sm-4 text-primary">
-                            Name:
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Name)
-                        </dd>
+<h1>Product Details</h1>
 
-                        <dt class="col-sm-4 text-primary">
-                            Description:
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Description)
-                        </dd>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
 
-                        <dt class="col-sm-4 text-primary">
-                            Price:
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Price) USD
-                        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
 
-                        <dt class="col-sm-4 text-primary">
-                            Stock:
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Stock) units
-                        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
 
-                        <dt class="col-sm-4 text-primary">
-                            Brand:
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Brand)
-                        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Stock)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Stock)
+        </dd>
 
-                        <dt class="col-sm-4 text-primary">
-                            Category:
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Category)
-                        </dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
-        <div class="card-footer text-right">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mr-2">Edit</a>
-            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-        </div>
-    </div>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Brand)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Brand)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.ImagePath" class="img-fluid" alt="@Model.Name" />
+        </dd>
+
+        
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>
