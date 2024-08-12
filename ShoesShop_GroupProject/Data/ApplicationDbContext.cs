@@ -13,5 +13,7 @@ namespace ShoesShop_GroupProject.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
     }
 }
