@@ -23,11 +23,11 @@
                         <td>
                             <div class="input-group">
                                 <span class="input-group-btn">
-                                    <a href="@Url.Action("DecreaseQuantity", new { productId = item.Product.Id })" class="btn btn-outline-danger btn-sm">-</a>
+                                    <a href="@Url.Action("DecreaseQuantity", new { productId = item.ProductId })" class="btn btn-outline-danger btn-sm">-</a>
                                 </span>
                                 <input type="text" class="form-control text-center" value="@item.Quantity" readonly />
                                 <span class="input-group-btn">
-                                    <a href="@Url.Action("IncreaseQuantity", new { productId = item.Product.Id })" class="btn btn-outline-success btn-sm">+</a>
+                                    <a href="@Url.Action("IncreaseQuantity", new { productId = item.ProductId })" class="btn btn-outline-success btn-sm">+</a>
                                 </span>
                             </div>
                         </td>
@@ -35,7 +35,7 @@
                         <td>$@(item.Product.Price * item.Quantity)</td>
                         <td>
                             <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
-                                <input type="hidden" name="productId" value="@item.Product.Id" />
+                                <input type="hidden" name="productId" value="@item.ProductId" />
                                 <button type="submit" class="btn btn-danger">Remove</button>
                             </form>
                         </td>
@@ -45,7 +45,7 @@
         </table>
 
         <div class="text-right">
-            <h4>Grand Total: $@Model.Sum(x => x.Product.Price * x.Quantity).ToString("F2")</h4>
+            <a href="@Url.Action("Checkout", "Cart")" class="btn btn-primary">Proceed to Checkout</a>
         </div>
     }
     else

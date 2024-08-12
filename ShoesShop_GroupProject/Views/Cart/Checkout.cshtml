@@ -1,0 +1,139 @@
+﻿@model ShoesShop_GroupProject.Models.CheckoutViewModel
+
+@using (Html.BeginForm("ProcessCheckout", "Cart", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Checkout</h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Shipping Information</h4>
+
+                <div class="form-group">
+                    <label for="FirstName">First Name</label>
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @id = "FirstName", required = "required" })
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="LastName">Last Name</label>
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @id = "LastName", required = "required" })
+                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @id = "Address", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="City">City</label>
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control", @id = "City", required = "required" })
+                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="State">State</label>
+                    @Html.TextBoxFor(m => m.State, new { @class = "form-control", @id = "State", required = "required" })
+                    @Html.ValidationMessageFor(m => m.State, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="ZipCode">Zip Code</label>
+                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control", @id = "ZipCode", required = "required" })
+                    @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="Country">Country</label>
+                    @Html.TextBoxFor(m => m.Country, new { @class = "form-control", @id = "Country", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="PhoneNumber">Phone Number</label>
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @id = "PhoneNumber", required = "required" })
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "Email", required = "required", type = "email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Payment Information</h4>
+
+                <div class="form-group">
+                    <label for="CardName">Name on Card</label>
+                    @Html.TextBoxFor(m => m.CardName, new { @class = "form-control", @id = "CardName", required = "required" })
+                    @Html.ValidationMessageFor(m => m.CardName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="CardNumber">Card Number</label>
+                    @Html.TextBoxFor(m => m.CardNumber, new { @class = "form-control", @id = "CardNumber", required = "required", placeholder = "Enter your 16-digit card number" })
+                    @Html.ValidationMessageFor(m => m.CardNumber, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="ExpirationDate">Expiration Date (MM/YY)</label>
+                    @Html.TextBoxFor(m => m.ExpirationDate, new { @class = "form-control", @id = "ExpirationDate", required = "required", placeholder = "MM/YY" })
+                    @Html.ValidationMessageFor(m => m.ExpirationDate, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="CVV">CVV</label>
+                    @Html.TextBoxFor(m => m.CVV, new { @class = "form-control", @id = "CVV", required = "required" })
+                    @Html.ValidationMessageFor(m => m.CVV, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Order Summary</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Size</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <tr>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Size</td>
+                                <td>@item.Quantity</td>
+                                <td>$@item.Product.Price.ToString("F2")</td>
+                                <td>$@(item.Product.Price * item.Quantity)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-right"><strong>Grand Total:</strong></td>
+                            <td><strong>$@Model.GrandTotal.ToString("F2")</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </div>
+    </div>
+}

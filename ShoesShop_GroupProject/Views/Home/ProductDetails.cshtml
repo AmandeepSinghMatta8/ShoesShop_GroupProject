@@ -51,7 +51,7 @@
                                     <i class="icon-minus2"></i>
                                 </button>
                             </span>
-                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                            <input type="number" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
                             <span class="input-group-btn ml-1">
                                 <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
                                     <i class="icon-plus2"></i>
@@ -67,7 +67,7 @@
                                 <div class="col-sm-12 text-center">
                                     <p class="addtocart">
                                         <button type="submit" class="btn btn-primary btn-addtocart">
-                                            <i class="icon-shopping-cart"></i> Add to Cart
+                                            @* <i class="icon-shopping-cart"></i>  *@Add to Cart
                                         </button>
                                     </p>
                                 </div>
@@ -101,6 +101,21 @@
             }
         );
 
+        $(document).ready(function () {
+            $('.quantity-left-minus').click(function (e) {
+                e.preventDefault();
+                var quantity = parseInt($('#quantity').val());
+                if (quantity > 1) {
+                    $('#quantity').val(quantity - 1);
+                }
+            });
+
+            $('.quantity-right-plus').click(function (e) {
+                e.preventDefault();
+                var quantity = parseInt($('#quantity').val());
+                $('#quantity').val(quantity + 1);
+            });
+        });
         // Add CSS for active and hover size
         $('<style>')
             .prop('type', 'text/css')

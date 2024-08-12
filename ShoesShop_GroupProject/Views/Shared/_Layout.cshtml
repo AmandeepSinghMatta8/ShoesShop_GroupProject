@@ -55,7 +55,7 @@
                         <div class="col-sm-5 col-md-6">
                             <form action="#" class="search-wrap">
                                 <div class="form-group">
-                                    <input type="search" class="form-control search" placeholder="Search">
+                                    <input type="search" class="form-control search" placeholder="Search" style="margin-left:250px">
                                     <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
                                 </div>
                             </form>
@@ -65,8 +65,8 @@
                         <div class="col-sm-12 menu-1 d-flex justify-content-between align-items-center">
                             <ul class="navbar-nav flex-grow-1 d-flex justify-content-start">
                                 <li class="nav-item active"><a class="nav-link text-dark" href="~/Home/Index">Home</a></li>
-                                <li class="nav-item"><a class="nav-link text-dark" asp-action="MansShoes" asp-controller="Home">Men</a></li>
-                                <li class="nav-item"><a class="nav-link text-dark" asp-action="WomensShoes" asp-controller="Home">Women</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-action="MansShoes" asp-controller="Home" asp-area="">Men</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-action="WomensShoes" asp-controller="Home" asp-area="">Women</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" href="~/Home/About">About</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" href="~/Home/Contact">Contact Us</a></li>
                                 <li class="nav-item cart"><a class="nav-link text-dark" href="~/Cart/Index"><i class="icon-shopping-cart"></i> Cart </a></li>
@@ -212,6 +212,11 @@
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Make sure these are included in your layout or in the view -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

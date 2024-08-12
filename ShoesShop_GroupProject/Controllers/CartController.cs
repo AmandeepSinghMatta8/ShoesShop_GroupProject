@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http; // For session management
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ShoesShop_GroupProject.Data;
 using ShoesShop_GroupProject.Models;
+using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json; // For serializing and deserializing objects to and from JSON
+using Newtonsoft.Json;
 
 namespace ShoesShop_GroupProject.Controllers
 {
@@ -84,7 +85,7 @@ namespace ShoesShop_GroupProject.Controllers
         public IActionResult RemoveFromCart(int productId)
         {
             var cartItems = GetCartItems();
-            var itemToRemove = cartItems.FirstOrDefault(c => c.Product.Id == productId);
+            var itemToRemove = cartItems.FirstOrDefault(c => c.ProductId == productId);
 
             if (itemToRemove != null)
             {
@@ -150,5 +151,83 @@ namespace ShoesShop_GroupProject.Controllers
             return RedirectToAction("Index");
         }
 
+        // Checkout functionality
+        public IActionResult Checkout()
+        {
+            var cartItems = GetCartItems();
+
+            if (!cartItems.Any())
+            {
+                return RedirectToAction("Index");
+            }
+
+            var checkoutViewModel = new CheckoutViewModel
+            {
+                CartItems = cartItems,
+                // GrandTotal will be computed in the model itself
+            };
+
+            return View(checkoutViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ProcessCheckout(CheckoutViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.CartItems = GetCartItems();
+
+                if (!model.CartItems.Any())
+                {
+                    return RedirectToAction("Index");
+                }
+
+                // Save order details and clear cart
+                SaveOrderDetails(model);
+                SaveCartItems(new List<CartItem>());
+
+                return RedirectToAction("OrderConfirmation");
+            }
+
+            // Re-display the form with validation messages if the model is invalid
+            model.CartItems = GetCartItems(); // Ensure CartItems are passed back to the view
+            return View("Checkout", model);
+        }
+
+        private void SaveOrderDetails(CheckoutViewModel model)
+        {
+            // Create a new Order object
+            var order = new Order
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Address = model.Address,
+                City = model.City,
+                State = model.State,
+                ZipCode = model.ZipCode,
+                Country = model.Country,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
+                OrderDate = DateTime.Now,
+                TotalAmount = model.GrandTotal,
+                OrderItems = model.CartItems.Select(ci => new OrderItem
+                {
+                    ProductId = ci.ProductId,
+                    Quantity = ci.Quantity,
+                    Price = ci.Price,
+                    Size = ci.Size
+                }).ToList()
+            };
+
+            // Save the order to the database
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+        }
+
+        public IActionResult OrderConfirmation()
+        {
+            return View("OrderConfirmation"); // For debugging
+        }
     }
 }
