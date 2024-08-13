@@ -20,17 +20,57 @@ namespace ShoesShop_GroupProject.Controllers
             return View();
         }
 
-        public IActionResult MansShoes(ListViewProduct model)
+        public IActionResult MansShoes(string SortOrder, string ShoeType, ListViewProduct model)
         {
-            model.Products = _context.Products.Where(p => p.Gender == "Men").ToList();
+            var productsQuery = _context.Products.Where(p => p.Gender == "Men");
+
+            if (!string.IsNullOrEmpty(ShoeType))
+            {
+                productsQuery = productsQuery.Where(p => p.Category == ShoeType);
+            }
+
+            switch (SortOrder)
+            {
+                case "PriceAsc":
+                    productsQuery = productsQuery.OrderBy(p => p.Price);
+                    break;
+                case "PriceDesc":
+                    productsQuery = productsQuery.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    break;
+            }
+
+            model.Products = productsQuery.ToList();
             return View(model);
         }
 
-        public IActionResult WomensShoes(ListViewProduct model)
+
+        public IActionResult WomensShoes(string SortOrder, string ShoeType, ListViewProduct model)
         {
-            model.Products = _context.Products.Where(p => p.Gender == "Women").ToList();
+            var productsQuery = _context.Products.Where(p => p.Gender == "Women");
+
+            if (!string.IsNullOrEmpty(ShoeType))
+            {
+                productsQuery = productsQuery.Where(p => p.Category == ShoeType);
+            }
+
+            switch (SortOrder)
+            {
+                case "PriceAsc":
+                    productsQuery = productsQuery.OrderBy(p => p.Price);
+                    break;
+                case "PriceDesc":
+                    productsQuery = productsQuery.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    break;
+            }
+
+            model.Products = productsQuery.ToList();
             return View(model);
         }
+
 
         public IActionResult ProductDetails(int id)
         {

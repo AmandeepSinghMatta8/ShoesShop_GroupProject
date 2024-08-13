@@ -11,6 +11,36 @@
                 <h2>Women's Shoes</h2>
             </div>
         </div>
+
+        <!-- Sort and Filter Section -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <form method="get" asp-action="WomensShoes">
+                    <div class="input-group">
+                        <select class="form-control" name="SortOrder" style="font-weight: bold; color: black;" onchange="this.form.submit()">
+                            <option value="">Sort by Price</option>
+                            <option value="PriceAsc">Price: Low to High</option>
+                            <option value="PriceDesc">Price: High to Low</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form method="get" asp-action="WomensShoes">
+                    <div class="input-group">
+                        <select class="form-control" name="ShoeType" style="font-weight: bold; color: black;" onchange="this.form.submit()">
+                            <option value="">Filter by Type</option>
+                            <option value="Running Shoes">Running Shoes</option>
+                            <option value="Sports Shoes">Sports Shoes</option>
+                            <option value="Casual Shoes">Casual Shoes</option>
+                            <option value="Sneaker Shoes">Sneaker Shoes</option>
+
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="row row-pb-md">
             @foreach (var productItem in Model.Products)
             {
